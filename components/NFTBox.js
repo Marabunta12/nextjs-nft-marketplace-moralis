@@ -26,6 +26,7 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
     const [tokenName, setTokenName] = useState("");
     const [tokenDescription, setTokenDescription] = useState("");
     const [showModal, setShowModal] = useState(false);
+    const hideModal = () => setShowModal(false);
 
     const { runContractFunction: getTokenURI } = useWeb3Contract({
         abi: nftAbi,
@@ -60,6 +61,7 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
 
     const isOwnedByUser = seller === account || seller === undefined;
     const formattedSellerAddress = isOwnedByUser ? "you" : truncateStr(seller || "", 15);
+
     const handleCardClick = () => {
         isOwnedByUser ? setShowModal(true) : console.log("lets buy");
     };
@@ -69,7 +71,14 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
             <div>
                 {imageURI ? (
                     <div>
-                        <UpdateListingModal isVisible={showModal}></UpdateListingModal>
+                        <UpdateListingModal
+                            isVisible={showModal}
+                            tokenId={tokenId}
+                            marketplaceAddress={marketplaceAddress}
+                            nftAddress={nftAddress}
+                            onClose={hideModal}
+                        />
+
                         <Card
                             title={tokenName}
                             description={tokenDescription}
