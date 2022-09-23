@@ -4,13 +4,13 @@ import { useWeb3Contract } from "react-moralis";
 import nftMarketplaceAbi from "../constants/NftMarketplace.json";
 import { ethers } from "ethers";
 
-export default function UpdateListingModal(
+export default function UpdateListingModal({
     nftAddress,
     tokenId,
     isVisible,
     marketplaceAddress,
-    onClose
-) {
+    onClose,
+}) {
     const dispatch = useNotification();
 
     const [PriceToUpdateListingWith, setPriceToUpdateListingWith] = useState(0);
